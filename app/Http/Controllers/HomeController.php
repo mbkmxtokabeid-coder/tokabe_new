@@ -6,6 +6,21 @@ use Illuminate\Http\Request;
 use App\Models\Pesan;
 class HomeController extends Controller
 {
+    /**
+     * Resolve a multilingual field (array with 'id'/'en' keys, or plain string) to a single string.
+     */
+    private function resolveText(mixed $value, string $fallback = ''): string
+    {
+        if ($value === null || $value === '') return $fallback;
+        if (is_string($value)) return $value;
+        if (is_array($value)) {
+            return ($value[app()->getLocale()] ?? '')
+                ?: ($value['id'] ?? '')
+                ?: ($value['en'] ?? '')
+                ?: (collect($value)->first() ?? $fallback);
+        }
+        return $fallback;
+    }
     public function servicesIndex()
     {
         $services = \App\Models\Service::all();
@@ -52,16 +67,14 @@ class HomeController extends Controller
                 ]);
             } else {
                 $items = $items->map(function($i) {
-                    $namaArray = is_string($i->nama) && str_starts_with($i->nama, '{') ? json_decode($i->nama, true) : $i->nama;
-                    $title = is_array($namaArray) ? ($namaArray[app()->getLocale()] ?? $namaArray['id'] ?? $namaArray['en'] ?? collect($namaArray)->first() ?? '') : $namaArray;
-                    
-                    $descArray = is_string($i->deskripsi_lokasi) && str_starts_with($i->deskripsi_lokasi, '{') ? json_decode($i->deskripsi_lokasi, true) : $i->deskripsi_lokasi;
-                    $desc = is_array($descArray) ? ($descArray[app()->getLocale()] ?? $descArray['id'] ?? $descArray['en'] ?? collect($descArray)->first() ?? '') : $descArray;
+                    $title = $this->resolveText($i->nama, $i->provinsi . ' - ' . $i->media);
+                    $desc  = $this->resolveText($i->deskripsi_lokasi)
+                          ?: $this->resolveText($i->tagline);
                     return (object)[
-                        'id' => $i->id,
-                        'title' => $title,
-                        'description' => $desc,
-                        'image' => $i->gambar ? asset('storage/image_lokasi/' . $i->gambar) : 'https://images.unsplash.com/photo-1542204165-65bf26472b9b?q=80&w=600&auto=format&fit=crop',
+                        'id'         => $i->id,
+                        'title'      => $title,
+                        'description'=> $desc,
+                        'image'      => $i->gambar ? asset('storage/image_lokasi/' . $i->gambar) : 'https://images.unsplash.com/photo-1542204165-65bf26472b9b?q=80&w=600&auto=format&fit=crop',
                         'detail_url' => route('dooh.detail', $i->id),
                     ];
                 });
@@ -84,16 +97,15 @@ class HomeController extends Controller
                 ]);
             } else {
                 $items = $items->map(function($i) {
-                    $namaArray = is_string($i->nama) && str_starts_with($i->nama, '{') ? json_decode($i->nama, true) : $i->nama;
-                    $title = is_array($namaArray) ? ($namaArray[app()->getLocale()] ?? $namaArray['id'] ?? $namaArray['en'] ?? collect($namaArray)->first() ?? '') : $namaArray;
-                    
-                    $descArray = is_string($i->deskripsi_lokasi) && str_starts_with($i->deskripsi_lokasi, '{') ? json_decode($i->deskripsi_lokasi, true) : $i->deskripsi_lokasi;
-                    $desc = is_array($descArray) ? ($descArray[app()->getLocale()] ?? $descArray['id'] ?? $descArray['en'] ?? collect($descArray)->first() ?? '') : $descArray;
+                    $title = $this->resolveText($i->nama, $i->wilayah ?? '');
+                    $desc  = $this->resolveText($i->deskripsi_lokasi)
+                          ?: $this->resolveText($i->tagline);
+                    $imgFile = $i->getRawOriginal('gambar') ?? '';
                     return (object)[
-                        'id' => $i->id,
-                        'title' => $title,
-                        'description' => $desc,
-                        'image' => $i->gambar ? asset('storage/image_lokasiooh/' . $i->gambar) : 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=600&auto=format&fit=crop',
+                        'id'         => $i->id,
+                        'title'      => $title,
+                        'description'=> $desc,
+                        'image'      => (!empty($imgFile)) ? asset('storage/image_lokasiooh/' . $imgFile) : 'https://images.unsplash.com/photo-1556761175-b413da4baf72?q=80&w=600&auto=format&fit=crop',
                         'detail_url' => route('ooh.detail', $i->id),
                     ];
                 });
@@ -116,16 +128,13 @@ class HomeController extends Controller
                 ]);
             } else {
                 $items = $items->map(function($i) {
-                    $titleArray = is_string($i->title) && str_starts_with($i->title, '{') ? json_decode($i->title, true) : $i->title;
-                    $title = is_array($titleArray) ? ($titleArray[app()->getLocale()] ?? $titleArray['id'] ?? $titleArray['en'] ?? collect($titleArray)->first() ?? '') : ($titleArray ?? 'Photography Session');
-                    
-                    $descArray = is_string($i->description) && str_starts_with($i->description, '{') ? json_decode($i->description, true) : $i->description;
-                    $desc = is_array($descArray) ? ($descArray[app()->getLocale()] ?? $descArray['id'] ?? $descArray['en'] ?? collect($descArray)->first() ?? '') : ($descArray ?? 'Professional photography services provided by Tokabe.');
+                    $title = $this->resolveText($i->title, 'Photography Session');
+                    $desc  = $this->resolveText($i->description, 'Professional photography services by Tokabe.');
                     return (object)[
-                        'id' => $i->id,
-                        'title' => $title,
-                        'description' => $desc,
-                        'image' => $i->image ? asset('storage/image_photography/' . $i->image) : 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=crop',
+                        'id'         => $i->id,
+                        'title'      => $title,
+                        'description'=> $desc,
+                        'image'      => $i->image_url ? asset('storage/image_photography/' . $i->image_url) : 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=crop',
                     ];
                 });
             }
@@ -147,16 +156,11 @@ class HomeController extends Controller
                 ]);
             } else {
                 $items = $items->map(function($i) {
-                    $namaArray = is_string($i->nama) && str_starts_with($i->nama, '{') ? json_decode($i->nama, true) : $i->nama;
-                    $title = is_array($namaArray) ? ($namaArray[app()->getLocale()] ?? $namaArray['id'] ?? $namaArray['en'] ?? collect($namaArray)->first() ?? '') : $namaArray;
-                    
-                    $descArray = is_string($i->deskripsi) && str_starts_with($i->deskripsi, '{') ? json_decode($i->deskripsi, true) : $i->deskripsi;
-                    $desc = is_array($descArray) ? ($descArray[app()->getLocale()] ?? $descArray['id'] ?? $descArray['en'] ?? collect($descArray)->first() ?? '') : $descArray;
                     return (object)[
-                        'id' => $i->id,
-                        'title' => $title,
-                        'description' => $desc,
-                        'image' => $i->gambar ? asset('storage/image_brand/' . $i->gambar) : 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=600&auto=format&fit=crop',
+                        'id'         => $i->id,
+                        'title'      => $this->resolveText($i->judul),
+                        'description'=> $this->resolveText($i->deskripsi),
+                        'image'      => $i->gambar ? asset('storage/image_brand/' . $i->gambar) : 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=600&auto=format&fit=crop',
                     ];
                 });
             }

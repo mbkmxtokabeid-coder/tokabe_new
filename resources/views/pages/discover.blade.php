@@ -185,9 +185,9 @@
                                             </span>
                                         </div>
 
-                                        <h2 class="cb-ff cb-fs-24 cb-fw-600 cb-color-black mt-20">{{ $loc->nama }}</h2>
+                                        <h2 class="cb-ff cb-fs-24 cb-fw-600 cb-color-black mt-20">@php $__nd = $loc->nama; echo is_array($__nd) ? ($__nd[app()->getLocale()] ?? $__nd['id'] ?? $__nd['en'] ?? '') : $__nd; @endphp</h2>
                                         <p class="cb-ff cb-fs-18 cb-fw-400 cb-lh-27 cb-color-gray300 mt-40 description-clamp mb-4">
-                                            {!! $loc->deskripsi_lokasi !!}
+                                            @php $__dd = $loc->deskripsi_lokasi; echo is_array($__dd) ? ($__dd[app()->getLocale()] ?? $__dd['id'] ?? $__dd['en'] ?? '') : $__dd; @endphp
                                         </p>
 
                                         <div class="about-video-banner-btn cmn-btn cb-br-50 center mt-45 cb-bg-color-brown btn-effect">
@@ -259,9 +259,9 @@
                                             </span>
                                         </div>
 
-                                        <h2 class="cb-ff cb-fs-24 cb-fw-600 cb-color-black mt-20">{{ $loc->nama }}</h2>
+                                        <h2 class="cb-ff cb-fs-24 cb-fw-600 cb-color-black mt-20">@php $__nn = $loc->nama; echo is_array($__nn) ? ($__nn[app()->getLocale()] ?? $__nn['id'] ?? $__nn['en'] ?? '') : $__nn; @endphp</h2>
                                         <p class="cb-ff cb-fs-18 cb-fw-400 cb-lh-27 cb-color-gray300 mt-40 description-clamp mb-4">
-                                            {!! $loc->deskripsi_lokasi !!}
+                                            @php $__ddd = $loc->deskripsi_lokasi; echo is_array($__ddd) ? ($__ddd[app()->getLocale()] ?? $__ddd['id'] ?? $__ddd['en'] ?? '') : $__ddd; @endphp
                                         </p>
 
                                         <div class="about-video-banner-btn cmn-btn cb-br-50 center mt-45 cb-bg-color-brown btn-effect">

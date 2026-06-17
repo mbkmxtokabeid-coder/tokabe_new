@@ -5,15 +5,27 @@
         </button>
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="mb-3">
-                    <label class="form-label">Title</label>
-                    <input type="text" class="form-control detail-title" required>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Title (EN)</label>
+                        <input type="text" class="form-control detail-title_en" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Title (ID)</label>
+                        <input type="text" class="form-control detail-title_id" required>
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Description</label>
-                    <textarea class="form-control detail-description" rows="3" required></textarea>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Description (EN)</label>
+                        <textarea class="form-control detail-description_en" rows="3" required></textarea>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Description (ID)</label>
+                        <textarea class="form-control detail-description_id" rows="3" required></textarea>
+                    </div>
                 </div>
 
                 <div class="mb-3">

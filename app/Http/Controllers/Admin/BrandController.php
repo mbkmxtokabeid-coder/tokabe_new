@@ -35,28 +35,44 @@ class BrandController extends Controller
     public function store(Request $request)
 {
     $validated = $request->validate([
-        'judul' => 'required|min:3',
-        'judul_tab' => 'required|min:3',
-        'deskripsi' => 'required|min:10',
+        'judul_id' => 'required|min:3',
+        'judul_en' => 'required|min:3',
+        'judul_tab_id' => 'required|min:3',
+        'judul_tab_en' => 'required|min:3',
+        'deskripsi_id' => 'required|min:10',
+        'deskripsi_en' => 'required|min:10',
         'gambar' => 'required|image|mimes:png,jpg,jpeg|max:2048',
-        'details' => 'required|array'
-
+        'details' => 'required|array',
+        'details.*.title_id' => 'required|min:3',
+        'details.*.title_en' => 'required|min:3',
+        'details.*.description_id' => 'required|min:10',
+        'details.*.description_en' => 'required|min:10',
     ], [
-        'judul.required' => 'Judul harus diisi',
-        'judul_tab.required' => 'Masukkan judul tab',
-        'deskripsi.required' => 'Deskripsi harus diisi',
+        'judul_id.required' => 'Judul (ID) harus diisi',
+        'judul_en.required' => 'Judul (EN) harus diisi',
+        'judul_tab_id.required' => 'Masukkan judul tab (ID)',
+        'judul_tab_en.required' => 'Masukkan judul tab (EN)',
+        'deskripsi_id.required' => 'Deskripsi (ID) harus diisi',
+        'deskripsi_en.required' => 'Deskripsi (EN) harus diisi',
         'gambar.required' => 'Gambar harus diisi',
-        'judul.min' => 'Judul minimal 3 karakter',
-        'deskripsi.min' => 'Deskripsi minimal 10 karakter',
         'gambar.mimes' => 'Format Gambar harus png/jpg/jpeg',
         'gambar.image' => 'Harus foto/gambar',
         'gambar.max' => 'Ukuran maksimal 2Mb',
     ]);
 
     $brand = new Brand;
-    $brand->judul = $request->judul;
-    $brand->tab_title = $request->judul_tab;
-    $brand->deskripsi = $request->deskripsi;
+    $brand->judul = [
+        'id' => $request->judul_id,
+        'en' => $request->judul_en
+    ];
+    $brand->tab_title = [
+        'id' => $request->judul_tab_id,
+        'en' => $request->judul_tab_en
+    ];
+    $brand->deskripsi = [
+        'id' => $request->deskripsi_id,
+        'en' => $request->deskripsi_en
+    ];
 
     $details = [];
 
@@ -69,8 +85,14 @@ class BrandController extends Controller
         }
 
         $details[] = [
-            'title' => $detail['title'],
-            'description' => $detail['description'],
+            'title' => [
+                'id' => $detail['title_id'] ?? '',
+                'en' => $detail['title_en'] ?? ''
+            ],
+            'description' => [
+                'id' => $detail['description_id'] ?? '',
+                'en' => $detail['description_en'] ?? ''
+            ],
             'image_url' => $imageName
         ];
     }
@@ -98,15 +120,27 @@ class BrandController extends Controller
         $brand = Brand::find($id);
 
         $validated = $request->validate([
-            'judul_tab' => 'required|min:3',
-            'judul' => 'required|min:3',
-            'deskripsi' => 'required|min:10',
+            'judul_id' => 'required|min:3',
+            'judul_en' => 'required|min:3',
+            'judul_tab_id' => 'required|min:3',
+            'judul_tab_en' => 'required|min:3',
+            'deskripsi_id' => 'required|min:10',
+            'deskripsi_en' => 'required|min:10',
            // 'gambar' => 'required|image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
-        $brand->judul = $request->judul;
-        $brand->tab_title = $request->judul_tab;
-        $brand->deskripsi = $request->deskripsi;
+        $brand->judul = [
+            'id' => $request->judul_id,
+            'en' => $request->judul_en
+        ];
+        $brand->tab_title = [
+            'id' => $request->judul_tab_id,
+            'en' => $request->judul_tab_en
+        ];
+        $brand->deskripsi = [
+            'id' => $request->deskripsi_id,
+            'en' => $request->deskripsi_en
+        ];
 
         if ($request->hasFile('gambar')) {
             $file = $request->file('gambar');
@@ -140,8 +174,14 @@ class BrandController extends Controller
                 }
     
                 $details[] = [
-                    'title' => $detail['title'],
-                    'description' => $detail['description'],
+                    'title' => [
+                        'id' => $detail['title_id'] ?? '',
+                        'en' => $detail['title_en'] ?? ''
+                    ],
+                    'description' => [
+                        'id' => $detail['description_id'] ?? '',
+                        'en' => $detail['description_en'] ?? ''
+                    ],
                     'image_url' => $imageName
                 ];
             }

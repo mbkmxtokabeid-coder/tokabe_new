@@ -72,7 +72,7 @@
             </div>
         </div>
 
-        <!-- Description -->
+        <!-- Description — mengikuti bahasa navbar -->
         <div class="bg-gray-50 rounded-3xl p-8 md:p-12 shadow-sm border border-gray-100 mb-16" data-aos="fade-up">
             <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b-2 border-green-400 pb-2 inline-block">{{ __('Project Overview') }}</h2>
             <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed">
@@ -80,16 +80,12 @@
                     $descData = $event->deskripsi ?? $event->description ?? '';
                     if (is_string($descData) && str_starts_with($descData, '{')) {
                         $descArray = json_decode($descData, true);
-                    } else {
-                        $descArray = $descData;
-                    }
-                    if (is_array($descArray)) {
                         $descText = $descArray[app()->getLocale()] ?? $descArray['id'] ?? $descArray['en'] ?? collect($descArray)->first() ?? '';
                     } else {
-                        $descText = $descArray;
+                        $descText = $descData;
                     }
                 @endphp
-                {!! $descText !!}
+                {!! nl2br(e($descText)) !!}
             </div>
         </div>
 

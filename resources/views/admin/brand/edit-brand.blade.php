@@ -69,37 +69,57 @@
 
                                                 <div class="lead font-weight-bold text-dark text-uppercase mb-3">Update
                                                     Brand!</div>
-                                                <p>Brand yang mau di-update: {{ $brand->judul }}</p>
+                                                <p>Brand yang mau di-update: {{ is_array($brand->judul) ? ($brand->judul['id'] ?? '') : $brand->judul }}</p>
 
                                                 <div class="row">
                                                     <!-- Left Column -->
-                                                    <div class="col-md-12">
-                                                        <div class="form-group">
-                                                            <label>Brand Name</label>
-                                                            <input type="text" name="judul"
-                                                                value="{{ old('judul', $brand->judul) }}"
-                                                                class="form-control">
-                                                            @error('brand')
-                                                                <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Tab Title</label>
-                                                            <input type="text" name="judul_tab"
-                                                                value="{{ old('judul_tab', $brand->tab_title) }}"
-                                                                class="form-control">
-                                                            @error('brand')
-                                                                <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-
-                                                        <div class="form mb-3">
-                                                            <label for="deskripsi">Deskripsi Brand</label>
-                                                            <textarea name="deskripsi" class="form-control">{{ old('deskripsi', $brand->deskripsi) }}</textarea>
-                                                            @error('deskripsi')
-                                                                <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
+                                                    <div class="col-md-12 mb-4">
+                                                        <label class="form-label font-weight-bold">Informasi Brand (Multibahasa)</label>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Field</th>
+                                                                    <th>English (EN)</th>
+                                                                    <th>Indonesia (ID)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><strong>Brand Name</strong></td>
+                                                                    <td>
+                                                                        <input type="text" name="judul_en" class="form-control" value="{{ old('judul_en', is_array($brand->judul) ? ($brand->judul['en'] ?? '') : $brand->judul) }}">
+                                                                        @error('judul_en') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" name="judul_id" class="form-control" value="{{ old('judul_id', is_array($brand->judul) ? ($brand->judul['id'] ?? '') : $brand->judul) }}">
+                                                                        @error('judul_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Tab Title</strong></td>
+                                                                    <td>
+                                                                        <input type="text" name="judul_tab_en" class="form-control" value="{{ old('judul_tab_en', is_array($brand->tab_title) ? ($brand->tab_title['en'] ?? '') : $brand->tab_title) }}">
+                                                                        @error('judul_tab_en') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" name="judul_tab_id" class="form-control" value="{{ old('judul_tab_id', is_array($brand->tab_title) ? ($brand->tab_title['id'] ?? '') : $brand->tab_title) }}">
+                                                                        @error('judul_tab_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Deskripsi Brand</strong></td>
+                                                                    <td>
+                                                                        <textarea name="deskripsi_en" class="form-control" rows="3">{{ old('deskripsi_en', is_array($brand->deskripsi) ? ($brand->deskripsi['en'] ?? '') : $brand->deskripsi) }}</textarea>
+                                                                        @error('deskripsi_en') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                    <td>
+                                                                        <textarea name="deskripsi_id" class="form-control" rows="3">{{ old('deskripsi_id', is_array($brand->deskripsi) ? ($brand->deskripsi['id'] ?? '') : $brand->deskripsi) }}</textarea>
+                                                                        @error('deskripsi_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                         <div class='mb-3'>
                                                             <label for="validationTextarea" class="form-label">Brand
                                                                 activity
@@ -116,24 +136,26 @@
                                                                                 </button>
 
                                                                                 <div class="row">
-                                                                                    <div class="col-md-6">
-                                                                                        <div class="mb-3">
-                                                                                            <label
-                                                                                                class="form-label">Title</label>
-                                                                                            <input type="text"
-                                                                                                name="details[{{ $index }}][title]"
-                                                                                                class="form-control detail-title"
-                                                                                                value="{{ old('details.' . $index . '.title', $detail['title']) }}"
-                                                                                                required
-                                                                                            >
+                                                                                    <div class="col-md-8">
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <label class="form-label">Title (EN)</label>
+                                                                                                <input type="text" name="details[{{ $index }}][title_en]" class="form-control detail-title_en" value="{{ old('details.' . $index . '.title_en', is_array($detail['title']) ? ($detail['title']['en'] ?? '') : $detail['title']) }}" required>
+                                                                                            </div>
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <label class="form-label">Title (ID)</label>
+                                                                                                <input type="text" name="details[{{ $index }}][title_id]" class="form-control detail-title_id" value="{{ old('details.' . $index . '.title_id', is_array($detail['title']) ? ($detail['title']['id'] ?? '') : $detail['title']) }}" required>
+                                                                                            </div>
                                                                                         </div>
-
-                                                                                        <div class="mb-3">
-                                                                                            <label
-                                                                                                class="form-label">Description</label>
-                                                                                            <textarea name="details[{{ $index }}][description]"
-                                                                                                class="form-control detail-description" 
-                                                                                                rows="3" required >{{ old('details.' . $index . '.description', $detail['description']) }}</textarea>
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <label class="form-label">Description (EN)</label>
+                                                                                                <textarea name="details[{{ $index }}][description_en]" class="form-control detail-description_en" rows="3" required>{{ old('details.' . $index . '.description_en', is_array($detail['description']) ? ($detail['description']['en'] ?? '') : $detail['description']) }}</textarea>
+                                                                                            </div>
+                                                                                            <div class="col-md-6 mb-3">
+                                                                                                <label class="form-label">Description (ID)</label>
+                                                                                                <textarea name="details[{{ $index }}][description_id]" class="form-control detail-description_id" rows="3" required>{{ old('details.' . $index . '.description_id', is_array($detail['description']) ? ($detail['description']['id'] ?? '') : $detail['description']) }}</textarea>
+                                                                                            </div>
                                                                                         </div>
 
                                                                                         <div class="mb-3">
@@ -271,12 +293,16 @@
                 newDetail.classList.remove('d-none');
                 newDetail.dataset.index = index;
 
-                const titleInput = newDetail.querySelector('.detail-title');
-                const descInput = newDetail.querySelector('.detail-description');
+                const titleEnInput = newDetail.querySelector('.detail-title_en');
+                const titleIdInput = newDetail.querySelector('.detail-title_id');
+                const descEnInput = newDetail.querySelector('.detail-description_en');
+                const descIdInput = newDetail.querySelector('.detail-description_id');
                 const imageInput = newDetail.querySelector('.detail-image');
 
-                titleInput.name = `details[${index}][title]`;
-                descInput.name = `details[${index}][description]`;
+                titleEnInput.name = `details[${index}][title_en]`;
+                titleIdInput.name = `details[${index}][title_id]`;
+                descEnInput.name = `details[${index}][description_en]`;
+                descIdInput.name = `details[${index}][description_id]`;
                 imageInput.name = `details[${index}][image]`;
 
                 setupImagePreview(newDetail);

@@ -34,23 +34,35 @@ class PhotographyController extends Controller
     public function create(Request $request)
     {
         $request->validate([
-            'title'=>'required|min:5',
-            'description'=>'required|min:10',
+            'title_id'=>'required|min:5',
+            'title_en'=>'required|min:5',
+            'description_id'=>'required|min:10',
+            'description_en'=>'required|min:10',
             'image_url'=>'required|image|mimes:png,jpg,jpeg,gif,webp|max:2048'
         ],[
-            'title.required'=>'Title must have value, do not leave with blank!',
-            'title.min'=>'Title value minimum 5 characters!',
-            'description.required'=>'Description must have value, at least 10 characters!',
-            'description.min'=>'Minimum characters for descriprion is 10 characters!',
+            'title_id.required'=>'Title (ID) must have value, do not leave with blank!',
+            'title_en.required'=>'Title (EN) must have value, do not leave with blank!',
+            'title_id.min'=>'Title (ID) value minimum 5 characters!',
+            'title_en.min'=>'Title (EN) value minimum 5 characters!',
+            'description_id.required'=>'Description (ID) must have value, at least 10 characters!',
+            'description_en.required'=>'Description (EN) must have value, at least 10 characters!',
+            'description_id.min'=>'Minimum characters for description (ID) is 10 characters!',
+            'description_en.min'=>'Minimum characters for description (EN) is 10 characters!',
             'image_url.required'=>'Image must have value, do not leave with blank!',
             'image_url.image'=>'Input file with image, do not others file!',
             'image_url.mimes'=>'Image format must be: png, jpeg, jpg, webp, and gif',
-            'image.max'=>'Image file size maximum 2MB'
+            'image_url.max'=>'Image file size maximum 2MB'
         ]);
 
         $photography=new Photography();
-        $photography->title=$request->title;
-        $photography->description=$request->description;
+        $photography->title = [
+            'id' => $request->title_id,
+            'en' => $request->title_en
+        ];
+        $photography->description = [
+            'id' => $request->description_id,
+            'en' => $request->description_en
+        ];
 
         //saving image data from user input
         if($request->hasFile('image_url')){
@@ -95,15 +107,23 @@ class PhotographyController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'title'=>'required|min:5',
-            'description'=>'required|min:10',
+            'title_id'=>'required|min:5',
+            'title_en'=>'required|min:5',
+            'description_id'=>'required|min:10',
+            'description_en'=>'required|min:10',
             //'image_url'=>'required|image|mimes:png,jpg,jpeg,gif,webp|max:2048'
         ]);
 
         $photography=Photography::findOrFail($id);
 
-        $photography->title = $request->title;
-        $photography->description = $request->description;
+        $photography->title = [
+            'id' => $request->title_id,
+            'en' => $request->title_en
+        ];
+        $photography->description = [
+            'id' => $request->description_id,
+            'en' => $request->description_en
+        ];
 
         if($request->hasFile('image_url')){
             $file=$request->file('image_url');

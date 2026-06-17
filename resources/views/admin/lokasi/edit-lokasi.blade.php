@@ -65,7 +65,7 @@
                                             @method('POST')
 
                                             <div class="lead font-weight-bold text-dark text-uppercase mb-3">Update Lokasi!</div>
-                                            <p>Lokasi yang mau di-update: {{ $lokasis->nama }}</p>
+                                            <p>Lokasi yang mau di-update: {{ is_array($lokasis->nama) ? ($lokasis->nama['id'] ?? '') : $lokasis->nama }}</p>
 
                                             <div class="row">
                                                 <div class="col-md-12 mb-4">

@@ -34,8 +34,8 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
             @foreach($services as $index => $item)
                 @php
-                    $judul = is_array($item->judul) ? ($item->judul[app()->getLocale()] ?? $item->judul['id'] ?? $item->judul['en'] ?? collect($item->judul)->first() ?? '') : $item->judul;
-                    $deskripsi = is_array($item->deskripsi) ? ($item->deskripsi[app()->getLocale()] ?? $item->deskripsi['id'] ?? $item->deskripsi['en'] ?? collect($item->deskripsi)->first() ?? '') : $item->deskripsi;
+                    $judul = is_array($item->judul) ? (($item->judul[app()->getLocale()] ?? '') ?: ($item->judul['id'] ?? '') ?: ($item->judul['en'] ?? '') ?: (collect($item->judul)->first() ?? '')) : $item->judul;
+                    $deskripsi = is_array($item->deskripsi) ? (($item->deskripsi[app()->getLocale()] ?? '') ?: ($item->deskripsi['id'] ?? '') ?: ($item->deskripsi['en'] ?? '') ?: (collect($item->deskripsi)->first() ?? '')) : $item->deskripsi;
                     $cleanDesc = strip_tags($deskripsi);
                     $shortDesc = \Illuminate\Support\Str::limit($cleanDesc, 120, '...');
                 @endphp

@@ -83,7 +83,7 @@
                                             <div class="card-body">
                                                 <p class="text-muted"><i class="feather icon-info"></i> <i>Drag (tahan dan geser) ikon <i class="feather icon-move"></i> untuk mengatur urutan hero.</i></p>
                                                 <div class="dt-responsive table-responsive">
-                                                    @php use Illuminate\Support\Str; @endphp
+
                                                     <table id="simpletable"
                                                         class="table table-striped table-bordered nowrap">
                                                         <thead>
@@ -112,15 +112,15 @@
                                                                             $judul = is_array($item->judul) ? ($item->judul[app()->getLocale()] ?? $item->judul['id'] ?? $item->judul['en'] ?? '') : $item->judul;
                                                                             $deskripsi = is_array($item->deskripsi) ? ($item->deskripsi[app()->getLocale()] ?? $item->deskripsi['id'] ?? $item->deskripsi['en'] ?? '') : $item->deskripsi;
                                                                         @endphp
-                                                                        {!! Str::limit($judul, 50, '...') !!}
+                                                                        {!! \Illuminate\Support\Str::limit($judul, 50, '...') !!}
                                                                     </td>
                                                                     <td class="align-middle"
                                                                         style="white-space: normal; word-wrap: break-word; max-width: 300px;">
-                                                                        {{ Str::limit($deskripsi, 50, '...') }}
+                                                                        {{ \Illuminate\Support\Str::limit($deskripsi, 50, '...') }}
                                                                     </td>
                                                                     <td class="align-middle">
                                                                         @if ($item->gambar)
-                                                                            <img src="{{ Str::startsWith($item->gambar, 'http') ? $item->gambar : asset('storage/image_hero/' . $item->gambar) }}"
+                                                                            <img src="{{ \Illuminate\Support\Str::startsWith($item->gambar, 'http') ? $item->gambar : asset('storage/image_hero/' . $item->gambar) }}"
                                                                                 alt="{{ $item->nama }}"
                                                                                 style="max-width: 150px; max-height: 150px; border-radius: 5px;">
                                                                         @else

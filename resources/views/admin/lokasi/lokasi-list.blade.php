@@ -77,7 +77,7 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="dt-responsive table-responsive">
-                                                @php use Illuminate\Support\Str; @endphp
+
                                                 <table id="simpletable" class="table table-striped table-bordered nowrap">
                                                     <thead>
                                                         <tr>
@@ -96,23 +96,23 @@
                                                             <tr>
                                                                 <td>{{ $loop->iteration }}</td>
                                                                 <td style="white-space: normal; word-wrap: break-word; max-width: 300px;">
-                                                                    {!! Str::limit(is_array($item->nama) ? ($item->nama['id'] ?? '') : $item->nama, 20, '...') !!}
+                                                                    {!! \Illuminate\Support\Str::limit(is_array($item->nama) ? ($item->nama['en'] ?? '') : ($item->nama ?: $item->getRawOriginal('nama')), 20, '...') !!}
                                                                 </td>
                                                                 <td style="white-space: normal; word-wrap: break-word; max-width: 200px;">
                                                                     {{ $item->provinsi }} 
                                                                 </td>
                                                                 <td style="white-space: normal; word-wrap: break-word; max-width: 300px;">
-                                                                    {!! Str::limit(is_array($item->tagline) ? ($item->tagline['id'] ?? '') : $item->tagline, 20, '...') !!}
+                                                                    {!! \Illuminate\Support\Str::limit(is_array($item->tagline) ? ($item->tagline['en'] ?? '') : ($item->tagline ?: $item->getRawOriginal('tagline')), 20, '...') !!}
                                                                 </td>
                                                                 <td style="white-space: normal; word-wrap: break-word; max-width: 300px;">
-                                                                    {!! Str::limit(is_array($item->deskripsi_lokasi) ? ($item->deskripsi_lokasi['id'] ?? '') : $item->deskripsi_lokasi, 30, '...') !!}
+                                                                    {!! \Illuminate\Support\Str::limit(is_array($item->deskripsi_lokasi) ? ($item->deskripsi_lokasi['en'] ?? '') : ($item->deskripsi_lokasi ?: $item->getRawOriginal('deskripsi_lokasi')), 30, '...') !!}
                                                                 </td>
                                                                 <td style="white-space: normal; word-wrap: break-word; max-width: 300px;">
                                                                     {{ $item->status }}
                                                                 </td>
                                                                 <td>
-                                                                    <img src="{{ Str::startsWith($item->gambar, 'http') ? $item->gambar : asset('storage/image_lokasi/' . $item->gambar) }}"
-                                                                        alt="{{ is_array($item->nama) ? ($item->nama['id'] ?? '') : $item->nama }}" width="100">
+                                                                    <img src="{{ \Illuminate\Support\Str::startsWith($item->gambar, 'http') ? $item->gambar : asset('storage/image_lokasi/' . $item->gambar) }}"
+                                                                        alt="{{ is_array($item->nama) ? ($item->nama['en'] ?? '') : ($item->nama ?: $item->getRawOriginal('nama')) }}" width="100">
                                                                 </td>
                                                                 <td>
                                                                     <a class="btn drp-icon btn-outline-primary"

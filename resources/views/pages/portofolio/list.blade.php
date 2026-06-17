@@ -30,7 +30,7 @@
         </div>
 
         <!-- Portofolio Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="flex flex-wrap justify-center gap-8">
             @forelse($portfolios as $index => $item)
                 @php
                     $judulData = $item->judul ?? $item->title ?? '';
@@ -86,7 +86,7 @@
                         </div>
                         
                         <!-- Content -->
-                        <div class="p-6 flex-grow flex flex-col justify-between">
+                        <div class="p-6 h-[220px] flex flex-col justify-between">
                             <div>
                                 <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-colors line-clamp-2">
                                     {{ $judulText }}

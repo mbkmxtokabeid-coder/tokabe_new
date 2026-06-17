@@ -55,7 +55,7 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="dt-responsive table-responsive">
-                                                    @php use Illuminate\Support\Str; @endphp
+
                                                     <table id="simpletable"
                                                         class="table table-striped table-bordered nowrap">
                                                         <thead>
@@ -76,11 +76,11 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td
                                                                         style="white-space: normal; word-wrap: break-word; max-width: 300px;">
-                                                                        {{ Str::limit(is_array($item->nama) ? ($item->nama['id'] ?? '') : $item->nama, 50, '...') }}
+                                                                        {{ \Illuminate\Support\Str::limit(is_array($item->nama) ? ($item->nama['en'] ?? '') : ($item->nama ?: $item->getRawOriginal('nama')), 50, '...') }}
                                                                     </td>
                                                                     <td
                                                                         style="white-space: normal; word-wrap: break-word; max-width: 300px;">
-                                                                        {{ Str::limit(is_array($item->deskripsi_lokasi) ? ($item->deskripsi_lokasi['id'] ?? '') : $item->deskripsi_lokasi, 100, '...') }}
+                                                                        {{ \Illuminate\Support\Str::limit(is_array($item->deskripsi_lokasi) ? ($item->deskripsi_lokasi['en'] ?? '') : ($item->deskripsi_lokasi ?: $item->getRawOriginal('deskripsi_lokasi')), 100, '...') }}
                                                                     </td>
                                                                     <td
                                                                         style="white-space: normal; word-wrap: break-word; max-width: 300px;">
@@ -96,8 +96,8 @@
                                                                     </td>
                                                                     <td>
                                                                         @if ($item->gambar)
-                                                                            <img src="{{ Str::startsWith($item->gambar, 'http') ? $item->gambar : asset('storage/image_lokasiooh/' . $item->gambar) }}"
-                                                                                alt="{{ is_array($item->nama) ? ($item->nama['id'] ?? '') : $item->nama }}"
+                                                                            <img src="{{ \Illuminate\Support\Str::startsWith($item->gambar, 'http') ? $item->gambar : asset('storage/image_lokasiooh/' . $item->gambar) }}"
+                                                                                alt="{{ is_array($item->nama) ? ($item->nama['en'] ?? '') : ($item->nama ?: $item->getRawOriginal('nama')) }}"
                                                                                 style="max-width: 150px; max-height: 150px;">
                                                                         @else
                                                                             <span>No Image</span>

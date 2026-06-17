@@ -63,25 +63,41 @@
                                         <div class="card-body">
                                             <form action="" method="POST" enctype="multipart/form-data">
                                                 @csrf
-                                                <div class="form-group row">
-                                                    <div class="col-lg-6">
-                                                        <label for="validationTextarea" class="form-label">Photography & Videography
-                                                            Title:</label>
-                                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" type="text" name="title"
-                                                            placeholder="ex: Photography is the most...."></textarea>
-                                                        @error('title')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="col-lg-6">
-                                                        <label for="validationTextarea" class="form-label">Photography & Videography
-                                                            Description:</label>
-                                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" type="text" name="description"
-                                                            placeholder="ex: To create specialized and...."></textarea>
-                                                        @error('description')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
+                                                <div class="mb-4">
+                                                    <label class="form-label font-weight-bold">Informasi Photography (Multibahasa)</label>
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Field</th>
+                                                                <th>English (EN)</th>
+                                                                <th>Indonesia (ID)</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td><strong>Photography Title</strong></td>
+                                                                <td>
+                                                                    <textarea class="form-control" name="title_en" rows="3" placeholder="Title (EN)"></textarea>
+                                                                    @error('title_en') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                </td>
+                                                                <td>
+                                                                    <textarea class="form-control" name="title_id" rows="3" placeholder="Judul (ID)"></textarea>
+                                                                    @error('title_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td><strong>Photography Description</strong></td>
+                                                                <td>
+                                                                    <textarea class="form-control" name="description_en" rows="3" placeholder="Description (EN)"></textarea>
+                                                                    @error('description_en') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                </td>
+                                                                <td>
+                                                                    <textarea class="form-control" name="description_id" rows="3" placeholder="Deskripsi (ID)"></textarea>
+                                                                    @error('description_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                 </div>
                                                 <div class="form-file mb-3 position-relative">
                                                     <label class="form-label">Photography & Videography Picture</label>

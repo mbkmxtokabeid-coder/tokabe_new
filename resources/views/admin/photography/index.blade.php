@@ -80,7 +80,7 @@
                                             </div>
                                             <div class="card-body">
                                                 <div class="dt-responsive table-responsive">
-                                                    @php use Illuminate\Support\Str; @endphp
+
                                                     <table id="simpletable"
                                                         class="table table-striped table-bordered nowrap">
                                                         <thead>
@@ -98,16 +98,16 @@
                                                                     <td>{{ $loop->iteration }}</td>
                                                                     <td
                                                                         style="white-space: normal; word-wrap: break-word; max-width: 300px;">
-                                                                        {!! Str::limit($row->title, 10, '...') !!}
+                                                                        {!! \Illuminate\Support\Str::limit(is_array($row->title) ? ($row->title['en'] ?? '') : ($row->title ?: $row->getRawOriginal('title')), 10, '...') !!}
                                                                     </td>
                                                                     <td
                                                                         style="white-space: normal; word-wrap: break-word; max-width: 300px;">
-                                                                        {!! Str::limit($row->description, 10, '...') !!}
+                                                                        {!! \Illuminate\Support\Str::limit(is_array($row->description) ? ($row->description['en'] ?? '') : ($row->description ?: $row->getRawOriginal('description')), 10, '...') !!}
                                                                     </td>
                                                                     <td>
                                                                         @if ($row->image_url)
                                                                             <img src="{{ asset('storage/image_photography/' . $row->image_url) }}"
-                                                                                alt="{{ $row->title }}"
+                                                                                alt="{{ is_array($row->title) ? ($row->title['en'] ?? '') : ($row->title ?: $row->getRawOriginal('title')) }}"
                                                                                 style="max-width: 150px; max-height: 150px;">
                                                                         @else
                                                                             <span>No Image</span>

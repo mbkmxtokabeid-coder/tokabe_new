@@ -11,18 +11,25 @@ class Lokasi extends Model
 
     protected $guarded = ['id'];
 
-    protected $casts = [
-        // 'nama' => 'array',
-        // 'deskripsi_lokasi' => 'array',
-    ];
+    private function decodeField(string $field): mixed
+    {
+        $raw = $this->getRawOriginal($field);
+        if ($raw === null || $raw === '') return null;
+        if (is_array($raw)) return $raw;
+        $decoded = json_decode($raw, true);
+        return (json_last_error() === JSON_ERROR_NONE) ? $decoded : $raw;
+    }
+
+    public function getNamaAttribute(): mixed            { return $this->decodeField('nama'); }
+    public function getDeskripsiLokasiAttribute(): mixed { return $this->decodeField('deskripsi_lokasi'); }
+    public function getTaglineAttribute(): mixed         { return $this->decodeField('tagline'); }
+
     public function getFormattedGambarAttribute()
     {
-       
         if (str_contains($this->gambar, 'image_lokasi/')) {
             return $this->gambar;
         }
-
-        
         return 'image_lokasi/' . $this->gambar;
     }
 }
+

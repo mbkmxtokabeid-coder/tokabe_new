@@ -64,31 +64,52 @@
                                             <div class="card-body">
                                                 <form action="" method="POST" enctype="multipart/form-data">
                                                     @csrf
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Brand Activity Title</label>
-                                                        <input type="text" name="judul" class="form-control"
-                                                            placeholder="Fill in the banner title here">
-                                                        @error('judul')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label class="form-label">Tab Title</label>
-                                                        <input type="text" name="judul_tab" class="form-control" placeholder="Fill in the tab title here">
-                                                        @error('judul_tab')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="validationTextarea" class="form-label">Brand activity
-                                                            Description:</label>
-                                                        <div class="col-md-6">
-                                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" type="text" name="deskripsi"
-                                                                placeholder="Fill in the service description here"></textarea>
-                                                            @error('deskripsi')
-                                                                <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
+                                                    <div class="mb-4">
+                                                        <label class="form-label font-weight-bold">Informasi Brand (Multibahasa)</label>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Field</th>
+                                                                    <th>English (EN)</th>
+                                                                    <th>Indonesia (ID)</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td><strong>Brand Activity Title</strong></td>
+                                                                    <td>
+                                                                        <input type="text" name="judul_en" class="form-control" placeholder="Title (EN)">
+                                                                        @error('judul_en') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" name="judul_id" class="form-control" placeholder="Judul (ID)">
+                                                                        @error('judul_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Tab Title</strong></td>
+                                                                    <td>
+                                                                        <input type="text" name="judul_tab_en" class="form-control" placeholder="Tab Title (EN)">
+                                                                        @error('judul_tab_en') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                    <td>
+                                                                        <input type="text" name="judul_tab_id" class="form-control" placeholder="Judul Tab (ID)">
+                                                                        @error('judul_tab_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td><strong>Brand activity Description</strong></td>
+                                                                    <td>
+                                                                        <textarea class="form-control" name="deskripsi_en" rows="3" placeholder="Description (EN)"></textarea>
+                                                                        @error('deskripsi_en') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                    <td>
+                                                                        <textarea class="form-control" name="deskripsi_id" rows="3" placeholder="Deskripsi (ID)"></textarea>
+                                                                        @error('deskripsi_id') <div class="text-danger small">{{ $message }}</div> @enderror
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="validationTextarea" class="form-label">Brand activity

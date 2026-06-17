@@ -12,8 +12,12 @@
         color: #ffaa00;
     }
 </style>
+@php
+    $namaOoh = is_array($lokasiooh->nama) ? ($lokasiooh->nama[app()->getLocale()] ?? $lokasiooh->nama['en'] ?? $lokasiooh->nama['id'] ?? '') : ($lokasiooh->nama ?: $lokasiooh->getRawOriginal('nama'));
+    $descOoh = is_array($lokasiooh->deskripsi_lokasi) ? ($lokasiooh->deskripsi_lokasi[app()->getLocale()] ?? $lokasiooh->deskripsi_lokasi['en'] ?? $lokasiooh->deskripsi_lokasi['id'] ?? '') : ($lokasiooh->deskripsi_lokasi ?: $lokasiooh->getRawOriginal('deskripsi_lokasi'));
+@endphp
 @extends('pages.template')
-@section('title', "Tokabe.id - $lokasiooh->nama")
+@section('title', "Tokabe.id - $namaOoh")
 @section('content')
 
         <div class="cba_demo_one">
@@ -39,7 +43,7 @@
                 <div class="container container-1290 mt-20">
                     <div class="Project-Details-part">
                         <h1 class="cb-ff cb-fs-60 cb-fw-400 cb-lh-70" style="color: black; font-weight: bold;">
-                            {{ $lokasiooh->nama }}</h1>
+                            {{ $namaOoh }}</h1>
                         <div class="project-details-billboard mt-50 imghover">
                             <img src="{{ asset('storage/image_lokasiooh/' . $lokasiooh->gambar) }}" 
                                  alt="{{ \App\Helpers\SeoHelper::getImageAlt('ooh', $lokasiooh->nama, $lokasiooh->wilayah ?? 'Medan') }}" 
@@ -51,7 +55,7 @@
                                 <h2 class="cb-ff cb-fs-40 cb-fw-600 cb-lh-45 text-capitalize mt-35 pro-hed">Point Of
                                     Interest</h2>
                                 <p class="cb-ff cb-fs-18 cb-fw-400 cb-lh-27 cb-color-gray300 mt-25" data-aos="fade-up"
-                                    data-aos-duration="3000">{!! $lokasiooh->deskripsi_lokasi !!}</p>
+                                    data-aos-duration="3000">{!! $descOoh !!}</p>
                             </div>
                             <div class="col-12 col-lg-4">
                                 <div class="serevice-get-touch cb-br-20 cb-bg-color-white overflow-hidden p-3 border">

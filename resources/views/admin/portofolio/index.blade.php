@@ -51,7 +51,7 @@
                                             <div class="card-body">
                                                 <div class="dt-responsive table-responsive">
 
-                                                    @php use Illuminate\Support\Str; @endphp
+
 
                                                     <table id="simpletable" class="table table-striped table-bordered nowrap">
                                                         <thead>
@@ -75,7 +75,7 @@
                                                                     <td>{{ $loop->iteration }}</td>
 
                                                                     <td style="white-space: normal; word-break: break-word; max-width: 200px;">
-                                                                        {!! Str::limit($row->judul, 30, '...') !!}
+                                                                        {!! \Illuminate\Support\Str::limit($row->judul, 30, '...') !!}
                                                                     </td>
 
                                                                     <td style="white-space: normal; word-break: break-word; max-width: 200px;">
@@ -95,7 +95,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        {{ Str::limit($row->deskripsi, 70, '...') }}
+                                                                        {{ \Illuminate\Support\Str::limit($row->deskripsi, 70, '...') }}
                                                                     </td>
 
                                                                     {{-- Kolom Menampilkan Images --}}

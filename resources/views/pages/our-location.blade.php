@@ -133,10 +133,10 @@
                                 </div>
                                 <div class="col-12 col-lg-8 cb-bg-color-white blog-content">
                                     <h1 class="lokasi-nama cb-ff cb-fs-32 cb-fw-600 cb-lh-38 text-capitalize">
-                                        {{ $loc->nama }}
+                                        @php $__ln = $loc->nama; echo is_array($__ln) ? ($__ln[app()->getLocale()] ?? $__ln['id'] ?? $__ln['en'] ?? '') : $__ln; @endphp
                                     </h1>
                                     <p class="cb-ff cb-fs-18 cb-fw-400 cb-lh-27 cb-color-gray300 mt-40 description-clamp mb-4">
-                                        {!! $loc->deskripsi_lokasi !!}
+                                        @php $__ld = $loc->deskripsi_lokasi; echo is_array($__ld) ? ($__ld[app()->getLocale()] ?? $__ld['id'] ?? $__ld['en'] ?? '') : $__ld; @endphp
                                     </p>
                                     <div class="blog-btn cb-br-50 center mt-40 tran3s btn-effect2">
                                         @php

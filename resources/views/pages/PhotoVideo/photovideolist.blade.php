@@ -27,15 +27,19 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
                 @foreach ($photography as $photo)
+                @php
+                    $title = is_array($photo->title) ? (($photo->title[app()->getLocale()] ?? '') ?: ($photo->title['en'] ?? '') ?: ($photo->title['id'] ?? '')) : ($photo->title ?: $photo->getRawOriginal('title'));
+                    $description = is_array($photo->description) ? (($photo->description[app()->getLocale()] ?? '') ?: ($photo->description['en'] ?? '') ?: ($photo->description['id'] ?? '')) : ($photo->description ?: $photo->getRawOriginal('description'));
+                @endphp
                 <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100 group transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl">
                     <div class="h-64 overflow-hidden relative">
                         <img src="{{ asset('storage/image_photography/' . $photo->image_url) }}" alt="{{ \App\Helpers\SeoHelper::getImageAlt('photo', $photo->title) }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
                     </div>
                     <div class="p-8 text-center">
-                        <h3 class="text-2xl font-bold text-gray-900 mb-3 uppercase tracking-tight">{{ $photo->title }}</h3>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-3 uppercase tracking-tight">{{ $title }}</h3>
                         <p class="text-gray-600 font-light leading-relaxed">
-                            {{ $photo->description }}
+                            {{ $description }}
                         </p>
                     </div>
                 </div>

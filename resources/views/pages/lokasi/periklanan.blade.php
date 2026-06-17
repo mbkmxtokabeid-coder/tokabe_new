@@ -12,8 +12,17 @@
         color: #ffaa00;
     }
 </style>
+@php
+    $rawNama = $lokasi->nama ?: $lokasi->getRawOriginal('nama');
+    $namaLokasi = is_string($rawNama) && str_starts_with($rawNama, '{') ? json_decode($rawNama, true) : $rawNama;
+    $namaLokasi = is_array($namaLokasi) ? (($namaLokasi[app()->getLocale()] ?? '') ?: ($namaLokasi['id'] ?? '') ?: ($namaLokasi['en'] ?? '') ?: (collect($namaLokasi)->first() ?? '')) : $namaLokasi;
+    
+    $rawDesc = $lokasi->deskripsi_lokasi ?: $lokasi->getRawOriginal('deskripsi_lokasi');
+    $descLokasi = is_string($rawDesc) && str_starts_with($rawDesc, '{') ? json_decode($rawDesc, true) : $rawDesc;
+    $descLokasi = is_array($descLokasi) ? (($descLokasi[app()->getLocale()] ?? '') ?: ($descLokasi['id'] ?? '') ?: ($descLokasi['en'] ?? '') ?: (collect($descLokasi)->first() ?? '')) : $descLokasi;
+@endphp
 @extends('pages.template')
-@section('title', "Tokabe.id - $lokasi->nama")
+@section('title', "Tokabe.id - $namaLokasi")
 @section('content')
     <div class="cba_demo_one">
         <!-- Preloder Start -->
@@ -41,7 +50,7 @@
                 <div class="Project-Details-part">
                     <div style="display: flex; width: 100%; text-align: center;">
                         <h1 class="cb-ff cb-fs-60 cb-fw-400 cb-lh-70 text-capitalize" style="color: #00000; width: 100%; font-weight: bold;">
-                            {{ $lokasi->nama }}</h1>
+                            {{ $namaLokasi }}</h1>
 
                     </div>
                     <div class="project-details-billboard mt-50 imghover">
@@ -55,7 +64,7 @@
                             <h2 class="cb-ff cb-fs-40 cb-fw-600 cb-lh-45 text-capitalize mt-35 pro-hed">Point Of
                                 Interest</h2>
                             <p class="cb-ff cb-fs-18 cb-fw-400 cb-lh-27 cb-color-gray300 mt-25" data-aos="fade-up"
-                                data-aos-duration="3000">{!! $lokasi->deskripsi_lokasi !!}</p>
+                                data-aos-duration="3000">{!! $descLokasi !!}</p>
                             <!-- Maps -->
                             <div class="map-container my-4 d-flex justify-content-center">
                                 <div class="shadow-lg border-0 rounded-4 overflow-hidden" style="width: 100%;">

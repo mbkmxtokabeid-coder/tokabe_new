@@ -94,11 +94,12 @@
                                                        @foreach ($brands as $item )
                                                             <tr>
                                                                 <td>{{$loop->iteration }}</td>
-                                                                <td>{{$item->judul}}</td>
-                                                                <td>{{ $item->tab_title }}</td>
-                                                                <td style="white-space: normal; word-wrap: break-word; max-width: 300px;">{{$item->deskripsi}}</td>
+
+                                                                <td>{{ is_array($item->judul) ? ($item->judul['en'] ?? '') : ($item->judul ?: $item->getRawOriginal('judul')) }}</td>
+                                                                <td>{{ is_array($item->tab_title) ? ($item->tab_title['en'] ?? '') : ($item->tab_title ?: $item->getRawOriginal('tab_title')) }}</td>
+                                                                <td style="white-space: normal; word-wrap: break-word; max-width: 300px;">{{ \Illuminate\Support\Str::limit(is_array($item->deskripsi) ? ($item->deskripsi['en'] ?? '') : ($item->deskripsi ?: $item->getRawOriginal('deskripsi')), 100) }}</td>
                                                                 <td>@if($item->gambar)
-                                                                        <img src="{{ asset('storage/image_brand/' . $item->gambar) }}" alt="{{ $item->judul }}" style="max-width: 150px; max-height: 150px;">
+                                                                        <img src="{{ asset('storage/image_brand/' . $item->gambar) }}" alt="{{ is_array($item->judul) ? ($item->judul['en'] ?? '') : ($item->judul ?: $item->getRawOriginal('judul')) }}" style="max-width: 150px; max-height: 150px;">
                                                                     @else
                                                                         <span>No Image</span>
                                                                     @endif</td>
